@@ -7,11 +7,13 @@ import { useState } from "react"
 export interface TaskTyping {
   id: number
   nameTask: string
+  completed: boolean
 }
 
 export function App() {
   const [input, setInput] = useState("")
   const [tasks, setTasks] = useState<TaskTyping[]>([])
+
 
   function handleAddTask() {
     const idRandom = (num: number) => Math.floor(Math.random() * num)
@@ -19,10 +21,28 @@ export function App() {
     const newTask = {
       id: idRandom(99999999999999),
       nameTask: input,
+      completed: false
     }
 
     setTasks([...tasks, newTask])
     setInput("")
+  }
+
+  function handleDeleteTask(id: number) {
+    const deleted = tasks.filter((task) => task.id !== id)
+    if (!confirm("Deseja apagar essa tarefa?")) {
+      return
+    }
+    setTasks(deleted)
+  }
+
+  function handleCompleted(id: number) {
+    const updatedTasks = tasks.map((task) => task.id === id ? {...task, completed: !task.completed} : task)
+    setTasks(updatedTasks)
+  }
+
+  function countCompletedTasks(): number {
+    return tasks.filter((task) => task.completed).length
   }
 
   return (
@@ -52,36 +72,44 @@ export function App() {
           </button>
         </form>
       </div>
-      <div className=" flex justify-center mt-16 ">
+      <div className=" flex justify-center mt-16 mb-6 ">
         <div className="w-[640px] flex justify-between">
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-yellow-200">Tarefas criadas</p>
             <span className="p-1 bg-stone-600 rounded-full w-6 h-5 flex items-center justify-center text-stone-50 text-sm">
-              0
+              {tasks.length}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold text-yellow-500">Concluidas</p>
-            <span className="p-1 bg-stone-600 rounded-full w-6 h-5 flex items-center justify-center text-stone-50 text-sm">
-              0
+            <span className="p-1 flex bg-stone-600 rounded-full w-6 h-5 items-center justify-center text-stone-50 text-sm">
+              {countCompletedTasks()}
             </span>
           </div>
         </div>
       </div>
-      <div className=" mt-6 flex flex-col items-center justify-center">
-        <div className="w-[640px] border-y-[0.5px] rounded-xl border-stone-500"></div>
-        <Notepad className="text-stone-600 mt-16" size={56} />
-        <p className="text-md font-bold text-stone-400 mt-4">
-          Você ainda não tem tarefas cadastradas{" "}
-          <p className="text-stone-500 font-normal">
-            Crie tarefas e organize seus itens a fazer
-          </p>
-        </p>
-      </div>
 
-      {tasks.map((task) => (
-        <TasksInput task={task} />
-      ))}
+      {tasks.length > 0 ? (
+        tasks.map((task) => (
+          <TasksInput
+            key={task.id}
+            task={task}
+            removeTask={handleDeleteTask}
+            handleCompleted={() => handleCompleted(task.id)}
+          />
+        ))
+      ) : (
+        <div className=" mt-6 flex flex-col items-center justify-center">
+          <div className="w-[640px] border-y-[0.5px] rounded-xl border-stone-500"></div>
+          <Notepad className="text-stone-600 mt-16" size={56} />
+          <p className="text-md font-bold text-stone-400 mt-4">
+            Você ainda não tem tarefas cadastradas{" "}
+            <p className="text-stone-500 font-normal">
+              Crie tarefas e organize seus itens a fazer
+            </p>
+          </p>
+        </div>
+      )}
     </div>
   )
 }
