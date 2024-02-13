@@ -1,30 +1,40 @@
-# React + TypeScript + Vite
+<h1 align="center">To-Do-List App</h1>
+<img align="center" src="./src/assets/todo.png">
+<img align="center" src="./src/assets/todo2.png">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br>
 
-Currently, two official plugins are available:
+<a href="https://todo-list-gamma-seven.vercel.app/">👉 DEPLOY</a>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p>
+This is a simple To-Do-List application developed with HTML, CSS, and JavaScript. It allows users to interactively create, remove, and view tasks.
+</p>
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Dynamic creation and removal of tasks.
+- Local storage using localStorage for data persistence between sessions.
+- User-friendly interface with interactive checkboxes and icons.
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Technologies Used
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Vite:** Used for development and bundling.
+- **TypeScript:** Provides static typing for a better development experience.
+- **React:** JavaScript library for building user interfaces.
+- **Styled Components:** CSS-in-JS library for styling React components.
+- **ESLint and Prettier:** Linting and code formatting tools to maintain code quality.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
+- **Phosphor Icons, React Icons:** Libraries for incorporating icons into the application.
+
+## Functionality
+
+The application allows users to add new tasks, mark them as completed through checkboxes, and remove unwanted tasks. Tasks are stored locally, enabling users to maintain their lists even after reloading the page.
+
+## How to Contribute
+
+Contributions are welcome! Feel free to submit pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
