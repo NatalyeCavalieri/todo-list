@@ -2,7 +2,7 @@ import { PiSealCheckFill } from "react-icons/pi"
 import { IoIosAddCircleOutline } from "react-icons/io"
 import { Notepad } from "@phosphor-icons/react"
 import { TasksInput } from "./components/TasksInput"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export interface TaskTyping {
   id: number
@@ -11,8 +11,13 @@ export interface TaskTyping {
 }
 
 export function App() {
+
   const [input, setInput] = useState("")
   const [tasks, setTasks] = useState<TaskTyping[]>([])
+
+  function saveTasksToLocalStorage(updatedTasks: TaskTyping[]) {
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks))
+  }
 
 
   function handleAddTask() {
@@ -26,6 +31,7 @@ export function App() {
 
     setTasks([...tasks, newTask])
     setInput("")
+    saveTasksToLocalStorage([...tasks, newTask])
   }
 
   function handleDeleteTask(id: number) {
@@ -34,16 +40,25 @@ export function App() {
       return
     }
     setTasks(deleted)
+    saveTasksToLocalStorage(deleted)
   }
 
   function handleCompleted(id: number) {
     const updatedTasks = tasks.map((task) => task.id === id ? {...task, completed: !task.completed} : task)
     setTasks(updatedTasks)
+    saveTasksToLocalStorage(updatedTasks)
   }
 
   function countCompletedTasks(): number {
     return tasks.filter((task) => task.completed).length
   }
+
+    useEffect(() => {
+      const storedTasks = localStorage.getItem("tasks")
+      if (storedTasks) {
+        setTasks(JSON.parse(storedTasks))
+      }
+    }, [])
 
   return (
     <div className="bg-stone-700 h-screen">
