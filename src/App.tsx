@@ -11,7 +11,6 @@ export interface TaskTyping {
 }
 
 export function App() {
-
   const [input, setInput] = useState("")
   const [tasks, setTasks] = useState<TaskTyping[]>([])
 
@@ -19,14 +18,13 @@ export function App() {
     localStorage.setItem("tasks", JSON.stringify(updatedTasks))
   }
 
-
   function handleAddTask() {
     const idRandom = (num: number) => Math.floor(Math.random() * num)
 
     const newTask = {
       id: idRandom(99999999999999),
       nameTask: input,
-      completed: false
+      completed: false,
     }
 
     setTasks([...tasks, newTask])
@@ -44,7 +42,9 @@ export function App() {
   }
 
   function handleCompleted(id: number) {
-    const updatedTasks = tasks.map((task) => task.id === id ? {...task, completed: !task.completed} : task)
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    )
     setTasks(updatedTasks)
     saveTasksToLocalStorage(updatedTasks)
   }
@@ -53,15 +53,15 @@ export function App() {
     return tasks.filter((task) => task.completed).length
   }
 
-    useEffect(() => {
-      const storedTasks = localStorage.getItem("tasks")
-      if (storedTasks) {
-        setTasks(JSON.parse(storedTasks))
-      }
-    }, [])
+  useEffect(() => {
+    const storedTasks = localStorage.getItem("tasks")
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks))
+    }
+  }, [])
 
   return (
-    <div className="bg-stone-700 h-screen">
+    <div className="bg-stone-700 h-screen p-4 sm:p-0">
       <header className="bg-stone-900 h-48 flex items-center justify-center gap-2">
         <PiSealCheckFill className="text-yellow-300 size-6" />
         <h1 className="text-4xl font-black text-yellow-200 ">
@@ -73,17 +73,17 @@ export function App() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="bg-stone-600 placeholder:text-stone-400 p-4 rounded-lg w-full h-12 text-stone-100 outline-none"
+            className="bg-stone-600 placeholder:text-stone-400 p-2 rounded-lg w-full h-10 text-stone-100 outline-none text-xs sm:p-4 sm:text-base sm:h-12 "
             type="text"
             placeholder="Adicione uma nova tarefa"
           />
           <button
-            className="bg-yellow-500 p-4 rounded-lg h-12 flex items-center font-bold text-stone-800 hover:bg-yellow-600 duration-200 gap-1"
+            className="bg-yellow-500 p-2 rounded-lg h-10 flex items-center font-bold text-sm text-stone-800 hover:bg-yellow-600 duration-200 gap-1 sm:h-12 sm:text-base sm:p-4"
             onClick={handleAddTask}
             type="button"
           >
             Criar
-            <IoIosAddCircleOutline className="size-6" />
+            <IoIosAddCircleOutline className="size-5 sm:size-6" />
           </button>
         </form>
       </div>
